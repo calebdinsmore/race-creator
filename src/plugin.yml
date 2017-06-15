@@ -1,0 +1,9 @@
+name: RaceCreator
+version: 1.0
+author: Caleb Dinsmore
+main: com.calebdinsmore.RaceCreator.Main
+
+commands:
+  racecreator:
+    description: Command for setting up RaceCreator maps.
+    usage: /racecreator
