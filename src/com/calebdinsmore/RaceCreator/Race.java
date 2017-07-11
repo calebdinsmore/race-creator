@@ -1,5 +1,6 @@
 package com.calebdinsmore.RaceCreator;
 
+import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -22,17 +23,33 @@ public class Race {
         mMain = main;
         mName = raceName;
         createRaceDir(raceName, raceCreator);
-        mRaceConfig = new RaceConfig(raceName, main);
+        mRaceConfig = new RaceConfig(this, main);
     }
 
     public Race(String raceName, JavaPlugin main) {
         mMain = main;
         mName = raceName;
-        mRaceConfig = new RaceConfig(raceName, main);
+        mRaceConfig = new RaceConfig(this, main);
     }
 
     public String getName() {
         return mName;
+    }
+
+    public void setName(String mName) {
+        this.mName = mName;
+    }
+
+    String getNameFromConfig() {
+        return mRaceConfig.mDataYaml.getString("name");
+    }
+
+    boolean addSpawn(Location spawn, Player player) {
+        if (mRaceConfig.addSpawn(spawn)) {
+            MessageUtilities.SendSuccessMessageToPlayer(player, "Spawn point added.");
+            return true;
+        }
+        return false;
     }
 
     private void createRaceDir(String raceName, Player raceCreator) {
@@ -42,9 +59,5 @@ public class Race {
         } else {
             MessageUtilities.SendErrorMessageToPlayer(raceCreator, "That race already exists!");
         }
-    }
-
-    public String getNameFromConfig() {
-        return mRaceConfig.mDataYaml.getString("name");
     }
 }

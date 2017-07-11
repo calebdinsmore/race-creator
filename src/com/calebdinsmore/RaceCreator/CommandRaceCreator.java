@@ -60,7 +60,7 @@ public class CommandRaceCreator implements CommandExecutor {
                 }
             case "setspawn":
                 if (mArgLength == 3) {
-
+                    setSpawn(args[2], player);
                 }
         }
         MessageUtilities.SendErrorMessageToPlayer(player, "Usage: /racecreator race <create>");
@@ -69,5 +69,15 @@ public class CommandRaceCreator implements CommandExecutor {
     private void createRace(String raceName, Player player) {
         Race race = new Race(raceName, player, mMain);
         mMain.addRaceToMap(race);
+    }
+
+    private void setSpawn(String race, Player player) {
+        if (!mMain.getRaceMap().containsKey(race)) {
+            MessageUtilities.SendErrorMessageToPlayer(player, "Error: race doesn't exist.");
+            return;
+        }
+
+        Race raceToChange = mMain.getRaceMap().get(race);
+        raceToChange.addSpawn(player.getLocation(), player);
     }
 }

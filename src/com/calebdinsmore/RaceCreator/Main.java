@@ -25,8 +25,12 @@ public class Main extends JavaPlugin {
         setUpRaceMap();
     }
 
-    public void addRaceToMap(Race race) {
+    void addRaceToMap(Race race) {
         mRaceMap.put(race.getName(), race);
+    }
+
+    HashMap<String, Race> getRaceMap() {
+        return mRaceMap;
     }
 
     private void createRacesDir() {
